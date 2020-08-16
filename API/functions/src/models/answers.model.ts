@@ -125,7 +125,7 @@ export async function likeAnswer(userId: string, questionId: string, answerId: s
         await firestore().collection('questions').doc(questionId).update({
             answers: firestore.FieldValue.arrayUnion(newAnswer)
         });
-        await firestore().collection('questions').doc(questionId).update({
+        return await firestore().collection('questions').doc(questionId).update({
             answers: firestore.FieldValue.arrayUnion(oldAnswer)
         });
 

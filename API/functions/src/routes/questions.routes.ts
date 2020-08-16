@@ -74,7 +74,7 @@ router.put(
 
 router.delete(
     '/',
-    async function addQuestion(req: Express.Request, res: Express.Response) {
+    async function deleteQuestion(req: Express.Request, res: Express.Response) {
         try {
             console.info('[questions-route::deleteQuestion] begin');
 
