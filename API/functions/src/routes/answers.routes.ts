@@ -58,7 +58,7 @@ router.delete(
 );
 
 router.put(
-    '/',
+    '/upvote',
     async function likeAnswer(req: Express.Request, res: Express.Response) {
         try {
             console.info('[answers-route::likeAnswer] begin');
