@@ -39,10 +39,10 @@ export async function addQuestion(question: addQuestion) {
             description: question.description,
             dateCreated: date.toISOString(),
             dateModified: date.toISOString(),
-            upvotes: question.upvotes,
+            upvotes: 0,
             name: question.name,
             tags: question.tags,
-            answers: question.answers,
+            answers: [],
             userId: question.userId
         };
         await firestore().collection('questions').doc(id).set(newQuestion);

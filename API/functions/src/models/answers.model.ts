@@ -16,7 +16,7 @@ export async function addAnswer(answer: addAnswer) {
             dateModified: date.toISOString(),
             name: answer.name,
             description: answer.description,
-            upvotes: answer.upvotes
+            upvotes: 0
         }
 
         await firestore().collection('questions').doc(questionId).update({
@@ -47,9 +47,10 @@ export async function editAnswer(answer: editAnswer) {
         console.info('[answers-model::editAnswer] begin');
 
         const id = answer.id;
-
+        const questionId = answer.questionId;
+        
         let oldAnswer;
-        const answers = await (await firestore().collection('questions').doc(id).get()).get('answers')
+        const answers = await (await firestore().collection('questions').doc(questionId).get()).get('answers')
         await answers.map((currentAnswer: any) => {
             if(currentAnswer.id === answer.id) {
                 oldAnswer = currentAnswer;
@@ -64,10 +65,10 @@ export async function editAnswer(answer: editAnswer) {
             upvotes: answer.upvotes
         };
 
-        await firestore().collection('questions').doc(id).update({
+        await firestore().collection('questions').doc(questionId).update({
             answers: firestore.FieldValue.arrayUnion(newAnswer),
         });
-        await firestore().collection('questions').doc(id).update({
+        await firestore().collection('questions').doc(questionId).update({
             answers: firestore.FieldValue.arrayRemove(oldAnswer),
         });
 
@@ -126,7 +127,7 @@ export async function likeAnswer(userId: string, questionId: string, answerId: s
             answers: firestore.FieldValue.arrayUnion(newAnswer)
         });
         return await firestore().collection('questions').doc(questionId).update({
-            answers: firestore.FieldValue.arrayUnion(oldAnswer)
+            answers: firestore.FieldValue.arrayRemove(oldAnswer)
         });
 
     } catch(e) {
