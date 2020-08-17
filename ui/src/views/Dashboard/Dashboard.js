@@ -70,7 +70,7 @@ export default function Dashboard() {
                     if(!result.error) {
                         setSearchedQuestion(result.question);
                     } else {
-                        enqueueSnackbar('Error occured. Please try again.');
+                        enqueueSnackbar('Error ocuured. No question exists for this tag.');
                     }
                 }) .catch(e => {
                     enqueueSnackbar('Error occured. Please try again.');
