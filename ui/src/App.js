@@ -1,7 +1,7 @@
 // core react
-import React from 'react';
+import React, { Component } from 'react';
 import * as firebase from "firebase/app";
-
+import LoginPage from './views/loginPage';
 // ext libs
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 // views
 // components
-import Demo from './views/Demo';
+// import Demo from './views/Demo';
 import PrivateRoute from './components/PrivateRoute';
 
 // configuration
@@ -21,16 +21,14 @@ import { firebaseConfig } from './configuration/configuration';
 // assets
 // styles
 import './App.css';
-
-firebase.initializeApp(firebaseConfig);
-
 function App() {
     return(
       <React.Fragment>
         <CssBaseline />
             <Router>
                 <Switch>
-                  <PrivateRoute path="/" exact component={Demo} />                      
+                  <PrivateRoute path="/" exact component={LoginPage} />   
+                  <Route path="/loginPage" component={ LoginPage } />                   
                 </Switch>
             </Router>
       </React.Fragment>
