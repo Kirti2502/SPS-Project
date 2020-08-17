@@ -10,7 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 // views
 // components
-import Demo from './views/Demo';
+// import Demo from './views/Demo';
 import PrivateRoute from './components/PrivateRoute';
 
 // configuration
@@ -27,7 +27,7 @@ function App() {
         <CssBaseline />
             <Router>
                 <Switch>
-                  <PrivateRoute path="/" exact component={Demo} />   
+                  <PrivateRoute path="/" exact component={LoginPage} />   
                   <Route path="/loginPage" component={ LoginPage } />                   
                 </Switch>
             </Router>
