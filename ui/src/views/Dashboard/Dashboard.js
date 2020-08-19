@@ -25,25 +25,36 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import ActionBar from '../../components/ActionBar';
 import DisplayQuestion from './DisplayQuestion';
 import SearchBox from '../../components/SearchBox';
+import AddQuestion from './AddQuestion';
 
 // services
 // errors
 // utils
 // configuration
 import configuration from '../../configuration/configuration';
+import { mergeClasses } from '@material-ui/styles';
 
 // icons
 // assets
 // styles
+const useStyles = makeStyles(() => ({
+    actionButtons: {
+        display: 'flex',
+        justifyContent: 'space-between'
+    }
+}))
 
 export default function Dashboard() {
 
     const enqueueSnackbar = useSnackbar();
+    const classes = useStyles();
     const [ questions, setQuestions] = React.useState([]);
     const [ openDisplayQuestion, setOpenDisplayQuestion ] = React.useState(false);
+    const [ openEditor, setOpenEditor ] = React.useState(false);
     const [ search, setSearch ] = React.useState(false);
     const [ searchField, setSearchField ] = React.useState('');
     const [ searchedQuestion, setSearchedQuestion ] = React.useState([]);
+    const [ questionToDisplay, setQuestionToDisplay ] = React.useState({});
 
     React.useEffect(() => {
         fetch(configuration.routes.questions, {
@@ -79,37 +90,47 @@ export default function Dashboard() {
         }
     }
 
-    function handleClickMore() {
-        setOpenDisplayQuestion(true);
+    function handleClickMore(question) {
+        return() => {
+            setQuestionToDisplay(question);
+            setOpenDisplayQuestion(true);
+        }
+    }
+
+    function handleClickAddQuestion() {
+        setOpenEditor(true);
     }
 
     return(
         <div>
-            <ActionBar
-                pageTitle={"Questions"}
-                actions={[
-                    <TextField 
-                        label='Search'
-                        onKeyPress={handleChangeSearchField}
-                        type='text' 
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <SearchOutlinedIcon />
-                            </InputAdornment>
-                        }   
-                    />
-                ]}
-            /> 
-            {(!search && !openDisplayQuestion) &&  <React.Fragment>
+            {(!search && !openDisplayQuestion && !openEditor) &&  <React.Fragment>
+                <ActionBar
+                    pageTitle={"Questions"}
+                    actions={[
+                        <div className={classes.actionButtons}>
+                            <TextField 
+                                label='Search'
+                                onKeyPress={handleChangeSearchField}
+                                type='text' 
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <SearchOutlinedIcon />
+                                    </InputAdornment>
+                                }   
+                            />
+                            <Button onClick={handleClickAddQuestion} style = {{ color: 'rgba(70,132,243,1)' }}>Add Question</Button>
+                        </div>
+                    ]}
+                /> 
                 {questions.map(question => (
                     <Card>
                         <CardContent>
-                            <Typography>{question.description}</Typography>
-                            <Typography>{question.name}</Typography>
-                            <Typography>{question.upvotes}</Typography>
+                            <Typography>Question - {question.description}</Typography>
+                            <Typography>Student Name - {question.name}</Typography>
+                            <Typography>Upvotes - {question.upvotes}</Typography>
                         </CardContent>
                         <CardActions>
-                            <Button onClick={handleClickMore} size="small">Learn More</Button>
+                            <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
                         </CardActions>
                     </Card>
                 ))} 
@@ -119,7 +140,8 @@ export default function Dashboard() {
                             handleClickMore={handleClickMore} 
                         />
             }   
-            {openDisplayQuestion && <DisplayQuestion />}        
+            {openDisplayQuestion && <DisplayQuestion question={questionToDisplay}/>}    
+            {openEditor && <AddQuestion />}    
         </div>
     );
 }

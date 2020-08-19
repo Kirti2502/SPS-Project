@@ -15,10 +15,11 @@ import { TextField } from '@material-ui/core';
 // MUI Icons
 // components
 import ActionBar from '../../components/ActionBar';
-import Dashboard from './Dashboard';
+import QuestionsAsked from './QuestionsAsked';
 
 // services
 import configuration from '../../configuration/configuration';
+import { UserContext } from '../../components/userContext';
 
 // errors
 // utils
@@ -62,8 +63,8 @@ export default function QuestionEditor({ questionToBeEdited }) {
     const { enqueueSnackbar } = useSnackbar();
     const [ disableButton, setDisableButton ] = React.useState(false);
     const [ description, setDescription ] = React.useState('');
-    const [ tags, setTags ] = React.useState([]);
-    const [ name, setName ] = React.useState('');
+    const [ question, setQuestion ] = React.useState(questionToBeEdited || {});
+    const appContext = UserContext.userId;
 
     function handleClickSubmit(event) {
         event.preventDefault();
@@ -74,30 +75,33 @@ export default function QuestionEditor({ questionToBeEdited }) {
             setDisableButton(true);
             enqueueSnackbar('Saving to the database...');
             fetch(configuration.routes.questions, {
-                method: 'POST',
+                method: 'PUT',
                 mode: 'cors',
                 headers: {
                     'Accept': 'application/json',
                     'Content-type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: name,
+                    id: question.id,
+                    name: question.name,
                     description: description,
-                    tags: tags,
+                    tags: question.tags,
+                    upvotes: question.upvotes,
+                    answers: question.answers,
                     userId: '1',
                 })
             })
                 .then(response => response.json())
                 .then(result => {
                     if(!result.error) {
-                        enqueueSnackbar('Question added successfully.');
+                        enqueueSnackbar('User updated successfully.');
                         setDisableButton(false);
                     } else {
-                        enqueueSnackbar('An error occured while adding question. Please try again.');
+                        enqueueSnackbar('An error occured while updating question. Please try again.');
                     }
                 }) .catch(e => {
-                    console.error('Error while adding question-', e);
-                    enqueueSnackbar('An error occured while adding question. Please try again.');
+                    console.error('Error while updating question-', e);
+                    enqueueSnackbar('An error occured while updating question. Please try again.');
                 })
         }
     }
@@ -108,14 +112,6 @@ export default function QuestionEditor({ questionToBeEdited }) {
 
     function handleClickCloseEditor() {
         setCloseEditor(true);
-    }
-
-    function handleChangeName(event) {
-      setName(event.target.value);
-    }
-
-    function handleChangeTags(event) {
-      setTags(event.target.value.split(','));
     }
     
     return(
@@ -135,25 +131,11 @@ export default function QuestionEditor({ questionToBeEdited }) {
                 <Paper className={classes.paper}>
                     <form className={classes.form} onSubmit={handleClickSubmit}>
                         <TextField 
-                          className={classes.formInput}
-                          label='Name'
-                          onChange={handleChangeName}
-                          size='small'
-                          value={name}
-                        />
-                        <TextField 
                             className={classes.formInput}
                             label='Description'
                             onChange={handleChangeDescription}
                             size='small'
                             value={description}
-                        />
-                        <TextField 
-                          className={classes.formInput}
-                          label='Tags'
-                          onChange={handleChangeTags}
-                          size="small"
-                          value={tags}
                         />
                         <Button 
                             className={classes.submitButton} 
@@ -167,7 +149,7 @@ export default function QuestionEditor({ questionToBeEdited }) {
                     </form>
                 </Paper>
             </React.Fragment>}
-            {closeEditor && <Dashboard />}
+            {closeEditor && <QuestionsAsked />}
         </div>
     );
 }

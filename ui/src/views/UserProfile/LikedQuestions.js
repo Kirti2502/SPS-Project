@@ -43,6 +43,7 @@ export default function LikedQuestions() {
     const [ closeEditor, setCloseEditor ] = React.useState(false);
     const [ openDisplayQuestion, setOpenDisplayQuestion ] = React.useState(false);
     const [ questions, setQuestions ] = React.useState([]);
+    const [ questionToBeDisplayed, setQuestionToBeDisplayed ] = React.useState({});
 
     React.useEffect(() => {
         fetch(configuration.routes.users + 'likedQuestions/' + 1, {
@@ -59,8 +60,11 @@ export default function LikedQuestions() {
             }) .catch(e => enqueueSnackbar('An error occured. Please try again.'))
     },[]);
 
-    function handleClickMore() {
-        setOpenDisplayQuestion(true);
+    function handleClickMore(question) {
+        return() => {
+            setOpenDisplayQuestion(true);
+            setQuestionToBeDisplayed(question);
+        }        
     }
 
     function handleClickCloseEditor() {
@@ -91,12 +95,12 @@ export default function LikedQuestions() {
                                 <Typography>{question.upvotes}</Typography>
                             </CardContent>
                             <CardActions>
-                                <Button onClick={handleClickMore} size="small">Learn More</Button>
+                                <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
                             </CardActions>
                         </Card>
                 ))} 
             </React.Fragment>}
-            {openDisplayQuestion && <DisplayQuestion />}
+            {openDisplayQuestion && <DisplayQuestion question={questionToBeDisplayed}/>}
             {closeEditor && <Dashboard />}
         </div>
     );

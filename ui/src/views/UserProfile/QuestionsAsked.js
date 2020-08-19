@@ -20,12 +20,14 @@ import { Typography } from '@material-ui/core';
 import ActionBar from '../../components/ActionBar';
 import Dashboard from '../Dashboard/Dashboard';
 import DisplayQuestion from '../Dashboard/DisplayQuestion';
+import QuestionEditor from './QuestionEditor';
 
 // services
 // errors
 // utils
 // configuration
 import configuration from '../../configuration/configuration';
+import { UserContext } from '../../components/userContext';
 
 // icons
 // assets
@@ -39,10 +41,13 @@ const useStyles = makeStyles(() => ({
 export default function QuestionsAsked() {
 
     const classes = useStyles();
-    const enqueueSnackbar = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const [ closeEditor, setCloseEditor ] = React.useState(false);
     const [ openDisplayQuestion, setOpenDisplayQuestion ] = React.useState(false);
     const [ questions, setQuestions ] = React.useState([]);
+    const [ questionToBeEdited, setQuestionToBeEdited ] = React.useState({});
+    const [ openEditor, setOpenEditor ] = React.useState(false);
+    const [ questionToBeDisplayed, setQuestionToBeDisplayed ] = React.useState({});
 
     React.useEffect(() => {
         fetch(configuration.routes.users + 'questionsAsked/' + 1, {
@@ -59,17 +64,52 @@ export default function QuestionsAsked() {
             }) .catch(e => enqueueSnackbar('An error occured. Please try again.'))
     },[]);
 
-    function handleClickMore() {
-        setOpenDisplayQuestion(true);
+    function handleClickMore(question) {
+        return() => {
+            setOpenDisplayQuestion(true);
+            setQuestionToBeDisplayed(question);
+        }        
     }
 
     function handleClickCloseEditor() {
         setCloseEditor(true);
     }
 
+    function handleClickDelete(question) {
+        return() => {
+            fetch(configuration.routes.questions, {
+                method: 'DELETE',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: question.id,
+                    userId: '1'
+                })
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if(!result.error) {
+                        enqueueSnackbar('Question deleted successfully');
+                    } else {
+                        enqueueSnackbar('An error occured. Please try again.');
+                    }
+                }).catch(e => enqueueSnackbar('An error occured. Please try again.'))
+        }
+    }
+
+    function handleClickEdit(question) {
+        return() => {
+        setQuestionToBeEdited(question);
+        setOpenEditor(true);
+        }
+    }
+
     return(
         <div>
-            {(!openDisplayQuestion && !closeEditor) && <React.Fragment>
+            {(!openDisplayQuestion && !closeEditor && !openEditor) && <React.Fragment>
                 <ActionBar
                     pageTitle={"Questions Asked"}
                     actions={[
@@ -84,20 +124,23 @@ export default function QuestionsAsked() {
                     ]}
                 />
                 {questions.map(question => (
-                        <Card>
-                            <CardContent>
-                                <Typography>{question.description}</Typography>
-                                <Typography>{question.name}</Typography>
-                                <Typography>{question.upvotes}</Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Button onClick={handleClickMore} size="small">Learn More</Button>
-                            </CardActions>
-                        </Card>
+                    <Card>
+                        <CardContent>
+                            <Typography>{question.description}</Typography>
+                            <Typography>{question.name}</Typography>
+                            <Typography>{question.upvotes}</Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
+                            <Button onClick={handleClickEdit(question)} size="small">Edit</Button>
+                            <Button onClick={handleClickDelete(question)} size="small">Delete</Button>
+                        </CardActions>
+                    </Card>
                 ))} 
             </React.Fragment>}
-            {openDisplayQuestion && <DisplayQuestion />}
+            {openDisplayQuestion && <DisplayQuestion question={questionToBeDisplayed} />}
             {closeEditor && <Dashboard />}
+            {openEditor && <QuestionEditor questionToBeEdited={questionToBeEdited} />}
         </div>
     );
 }

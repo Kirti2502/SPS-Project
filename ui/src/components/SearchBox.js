@@ -11,6 +11,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import ActionBar from './ActionBar';
 
 // MUI Icons
 // components
@@ -34,6 +35,9 @@ export default function SearchBox({ questions, handleClickMore }) {
 
     return(
         <div>
+            <ActionBar 
+                pageTitle='Search'
+            />
             {questions.map(question => (
                 <Card>
                     <CardContent>
