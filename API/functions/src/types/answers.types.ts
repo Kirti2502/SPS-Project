@@ -8,7 +8,7 @@ export interface Answer {
 
 export type addAnswer = Pick<
     Answer,
-    'description' | 'name' | 'upvotes'
+    'description' | 'name' 
 > & { userId: string, questionId: string };
 
-export type editAnswer = addAnswer & { id: string };
+export type editAnswer = addAnswer & { id: string, upvotes: number };

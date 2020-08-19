@@ -24,6 +24,7 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 // components
 import ActionBar from '../../components/ActionBar';
 import DisplayQuestion from './DisplayQuestion';
+import SearchBox from '../../components/SearchBox';
 
 // services
 // errors
@@ -68,7 +69,7 @@ export default function Dashboard() {
                 .then(response => response.json())
                 .then(result => {
                     if(!result.error) {
-                        setSearchedQuestion(result.question);
+                        setSearchedQuestion(result.questions);
                     } else {
                         enqueueSnackbar('Error ocuured. No question exists for this tag.');
                     }
@@ -114,7 +115,8 @@ export default function Dashboard() {
                 ))} 
             </React.Fragment>}
             {search && <SearchBox
-                            questions={searchedQuestion} 
+                            questions={searchedQuestion}
+                            handleClickMore={handleClickMore} 
                         />
             }   
             {openDisplayQuestion && <DisplayQuestion />}        

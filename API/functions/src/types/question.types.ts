@@ -21,7 +21,7 @@ export interface Question {
 
 export type addQuestion = Pick<
     Question,
-    'description' | 'name' | 'upvotes' | 'tags' | 'answers' | 'userId'
+    'description' | 'name' |  'tags' | 'userId'
 >;
 
-export type editQuestion = addQuestion & { id: string };
+export type editQuestion = addQuestion & { id: string, upvotes: number, answers: Answer[] };
