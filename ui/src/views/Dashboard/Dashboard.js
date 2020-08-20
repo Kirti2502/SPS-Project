@@ -12,7 +12,6 @@ import { Button } from '@material-ui/core';
 import { Card } from '@material-ui/core';
 import { CardActions } from '@material-ui/core';
 import { CardContent } from '@material-ui/core';
-import { CircularProgress } from '@material-ui/core';
 import { InputAdornment } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
@@ -32,7 +31,6 @@ import AddQuestion from './AddQuestion';
 // utils
 // configuration
 import configuration from '../../configuration/configuration';
-import { mergeClasses } from '@material-ui/styles';
 
 // icons
 // assets
@@ -41,6 +39,15 @@ const useStyles = makeStyles(() => ({
     actionButtons: {
         display: 'flex',
         justifyContent: 'space-between'
+    },
+    card: {
+        height: '200px',
+        width: '300px',
+        margin: '50px'
+    },
+    cardsDisplay: {
+        display: 'flex',
+        flexWrap: 'wrap'
     }
 }))
 
@@ -122,18 +129,20 @@ export default function Dashboard() {
                         </div>
                     ]}
                 /> 
-                {questions.map(question => (
-                    <Card>
-                        <CardContent>
-                            <Typography>Question - {question.description}</Typography>
-                            <Typography>Student Name - {question.name}</Typography>
-                            <Typography>Upvotes - {question.upvotes}</Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
-                        </CardActions>
-                    </Card>
-                ))} 
+                <div className={classes.cardsDisplay}>
+                    {questions.map(question => (
+                        <Card className={classes.card}>
+                            <CardContent>
+                                <Typography>Question - {question.description}</Typography>
+                                <Typography>Student Name - {question.name}</Typography>
+                                <Typography>Upvotes - {question.upvotes}</Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
+                            </CardActions>
+                        </Card>
+                    ))} 
+                </div>
             </React.Fragment>}
             {search && <SearchBox
                             questions={searchedQuestion}

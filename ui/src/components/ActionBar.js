@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     actionbar:{
         display: 'flex',
         borderBottom: 'solid',
-        borderColor: '#FFFFFF',
+        borderColor: '#000000',
         fontSize: 35,
         justifyContent: 'space-between',
         padding: theme.spacing(1),

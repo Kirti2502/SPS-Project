@@ -46,7 +46,7 @@ export default function LikedQuestions() {
     const [ questionToBeDisplayed, setQuestionToBeDisplayed ] = React.useState({});
 
     React.useEffect(() => {
-        fetch(configuration.routes.users + 'likedQuestions/' + 1, {
+        fetch(configuration.routes.users + 'likedQuestions/1', {
             method: 'GET',
             mode: 'cors'
         })
