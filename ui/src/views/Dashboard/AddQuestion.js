@@ -13,18 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,9 +37,26 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
 
+  function handleClickSubmit() {
+    event.preventDefault();
+    fetch(configuration.routes.questions, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+        description: description,
+        name: name,
+        tags: tags,
+        userId: 1
+    })
+    })
+  }
+
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -59,7 +64,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleClickSubmit}>
           
           <TextField
             variant="outlined"
@@ -102,9 +107,6 @@ export default function SignIn() {
           </Button>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }
