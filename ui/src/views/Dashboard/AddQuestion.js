@@ -170,4 +170,77 @@ export default function QuestionEditor({ questionToBeEdited }) {
             {closeEditor && <Dashboard />}
         </div>
     );
+=======
+  function handleClickSubmit() {
+    event.preventDefault();
+    fetch(configuration.routes.questions, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+        description: description,
+        name: name,
+        tags: tags,
+        userId: 1
+    })
+    })
+  }
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={handleClickSubmit}>
+          
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="title"
+            label="Question Title"
+            type="title"
+            id="title"
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="body"
+            label="Question Body"
+            name="body"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="tag"
+            label="Question Tag"
+            type="tag"
+            id="tag"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Submit Question
+          </Button>
+        </form>
+      </div>
+    </Container>
+  );
 }
