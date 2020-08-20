@@ -40,7 +40,7 @@ function App() {
             <Router>
                 <Switch>
                   <UserProvider>
-                    <Route path="/login" component={ LoginPage } />  
+                    <Route path="/" exact component={ LoginPage } />  
                     <PrivateRoute path="/dashboard" exact component={Dashboard} />
                     <PrivateRoute path="/questions-liked" exact component={LikedQuestions} />
                     <PrivateRoute path="/answers-liked" exact component={LikedAnswers} />

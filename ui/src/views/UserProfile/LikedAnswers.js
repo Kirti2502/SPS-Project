@@ -33,6 +33,15 @@ import configuration from '../../configuration/configuration';
 const useStyles = makeStyles(() => ({
     actionButton: {
         color: 'rgba(70,132,243,1)'
+    },
+    card: {
+        height: '200px',
+        width: '300px',
+        margin: '50px'
+    },
+    cardsDisplay: {
+        display: 'flex',
+        flexWrap: 'wrap'
     }
 }))
 
@@ -81,18 +90,20 @@ export default function LikedAnswers() {
                     </Button>,
                     ]}
                 />
-                {questions.map(question => (
-                        <Card>
+                <div className={classes.cardsDisplay}>
+                    {questions.map(question => (
+                        <Card className={classes.card}>
                             <CardContent>
-                                <Typography>{question.description}</Typography>
-                                <Typography>{question.name}</Typography>
-                                <Typography>{question.upvotes}</Typography>
+                                <Typography>Question - {question.description}</Typography>
+                                <Typography>Student Name - {question.name}</Typography>
+                                <Typography>Upvotes - {question.upvotes}</Typography>
                             </CardContent>
                             <CardActions>
                                 <Button onClick={handleClickMore} size="small">Learn More</Button>
                             </CardActions>
                         </Card>
-                ))} 
+                    ))} 
+                </div>
             </React.Fragment>}
             {openDisplayQuestion && <DisplayQuestion />}
             {closeEditor && <Dashboard />}
