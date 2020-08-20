@@ -106,7 +106,7 @@ export async function likeQuestion(questionId: string, userId: string) {
 
         const upvotes = await(await firestore().collection('questions').doc(questionId).get()).get('upvotes');
         await firestore().collection('users').doc(userId).update({
-            likeQuestions: firestore.FieldValue.arrayUnion(questionId),
+            likedQuestions: firestore.FieldValue.arrayUnion(questionId),
         });
         return await firestore().collection('questions').doc(questionId).update({
             upvotes: upvotes+1
