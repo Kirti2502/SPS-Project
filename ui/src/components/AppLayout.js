@@ -5,18 +5,19 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 // mui hooks
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ServerStyleSheets } from '@material-ui/core/styles';
 
 // mui components
+import Avatar from '@material-ui/core/Avatar';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import { ListItem, ListItemText } from '@material-ui/core';
 
 // mui icons
 // hooks
 // components
+import { UserContext } from '../components/userContext';
+import SimpleDialog from './SimpleDialog';
+
 // services
 // errors
 // utils
@@ -37,18 +38,6 @@ const useStyles = makeStyles((theme) => ({
     logo: {
         height: 50,
         width: 100,
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-        backgroundColor: '#00008B'
-    },
-    drawerContainer: {
-        overflow: 'auto',
-        color: theme.palette.background.paper,
     },
     content: {
         flexGrow: 1,
@@ -79,37 +68,38 @@ const useStyles = makeStyles((theme) => ({
         padding: '14px 16px',
         textDecoration: 'none',
         fontSize: '18px'
-    }  
+    } ,
+    toolbar: {
+        color: '#000000',
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    dialog: {
+        display: 'flex',
+        justifyContent: 'flex-end'
+    }
 }));
 export default function AppLayout({children}) {
+
     const classes = useStyles();
+    const appContext = UserContext;
+    const [ open, setOpen ] = React.useState(false);
+
+    function handleClickAvatar() {
+        setOpen(true);
+    }
+    function handleClose() {
+        setOpen(false);
+    }
     return (
         <div className={classes.root}>
             <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
-                    <img src='#'  alt="logo" className={classes.logo} />
+                <Toolbar className={classes.toolbar}>
+                    <h3>SPS Doubt Clearing Platform</h3>
+                    <Avatar onClick={handleClickAvatar}>{appContext.name}</Avatar>
+                    <SimpleDialog open={open} />
                 </Toolbar>
             </AppBar>
-            <Drawer
-                className={classes.drawer}
-                variant="permanent"
-                classes={{ paper: classes.drawerPaper }}
-            >
-                <Toolbar />
-                <div className={classes.drawerContainer}>
-                    <List>
-                        <ListItemText className={classes.content}>TAGS</ListItemText>
-                        <List>                            
-                            <ListItem button component={Link} to="/">
-                                <ListItemText className={classes.contentNestedList} primary="Java" />
-                            </ListItem> 
-                            <ListItem button component={Link} to="/theme-view">
-                                <ListItemText className={classes.contentNestedList} primary="Javascript" />
-                            </ListItem>                            
-                        </List>
-                    </List>
-                </div>
-            </Drawer>
             <main className={classes.content}>
                 <Toolbar />
                 <div>{children}</div>

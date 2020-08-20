@@ -9,6 +9,7 @@ import { Route, Redirect } from 'react-router-dom';
 // hooks
 // components
 import AppLayout from './AppLayout';
+import { UserContext } from './userContext';
 
 // services
 // errors
@@ -19,11 +20,13 @@ import AppLayout from './AppLayout';
 // styles
 
 export default function PrivateRoute({ component: Component, ...rest }) {
+    const userContext = React.useContext(UserContext);
     return (<Route
         {...rest}
         render={ 
-            (props) => (
-                 <AppLayout><Component {...props} /></AppLayout>
+            (props) => (userContext.isAuthenticated
+                ? <AppLayout><Component {...props} /></AppLayout>
+                : <Redirect to="/login" />
             )           
         }
     />);

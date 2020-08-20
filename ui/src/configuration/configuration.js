@@ -12,5 +12,6 @@ export default {
     routes: {
         questions : 'https://asia-east2-summer20-sps-86.cloudfunctions.net/questions/',
         answers: 'https://asia-east2-summer20-sps-86.cloudfunctions.net/answers/',
+        users: 'https://asia-east2-summer20-sps-86.cloudfunctions.net/users/',
     }
 }

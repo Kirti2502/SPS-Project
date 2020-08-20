@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     actionbar:{
         display: 'flex',
         borderBottom: 'solid',
+        borderColor: '#FFFFFF',
         fontSize: 35,
         justifyContent: 'space-between',
         padding: theme.spacing(1),
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     title: {
-        color: '#009688',
+        color: 'rgba(70,132,243,1)',
         marginLeft: theme.spacing(2),
         fontWeight: 'normal',
     }
