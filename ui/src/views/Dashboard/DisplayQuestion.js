@@ -10,6 +10,9 @@ import { useSnackbar } from 'notistack';
 import ActionBar from '../../components/ActionBar';
 import configuration from '../../configuration/configuration';
 import { makeStyles } from '@material-ui/styles';
+import { Card } from '@material-ui/core';
+
+import Dashboard from './Dashboard';
  
 const useStyles = makeStyles(() => ({
     paper: {
@@ -18,6 +21,10 @@ const useStyles = makeStyles(() => ({
     },
     form: {
         marginBottom: '50px'
+    },
+    card: {
+        marginLeft: '50px',
+        marginBottom: '30px'
     }
 }))
 
@@ -25,6 +32,7 @@ export default function DisplayQuestion({ question }) {
 
     const [ answer, setAnswer ] = React.useState('');
     const { enqueueSnackbar } = useSnackbar();
+    const [ close, setClose ] = React.useState(false);
     const classes = useStyles();
 
     function handleChangeAnswer(event) {
@@ -87,38 +95,75 @@ export default function DisplayQuestion({ question }) {
             })
     }
 
+    function handleClickLikeAnswer(answer) {
+        return() => {
+            fetch(configuration.routes.answers + 'upvote',{
+                method: 'PUT',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    questionId: question.id,
+                    userId: '1',
+                    answerId: answer.id
+                })
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if(!result.error) {
+                        enqueueSnackbar('Answer upvoted successfully.');
+                    } else {
+                        enqueueSnackbar('An error occured while upvoting answer. Please try again.');
+                    }
+                }) .catch(e => {
+                    console.error('Error while upvoting answer-', e);
+                    enqueueSnackbar('An error occured while upvoting answer. Please try again.');
+                })
+        }
+    }
+
+    function handleClickClose() {
+        setClose(true);
+    }
+
     return(
-        <React.Fragment>
-            <ActionBar 
-                pageTitle='Question'
-                actions={[
-                    <div>
-                        <Button>Close</Button>
-                    </div>
-                ]}
-            />
-            <Paper className={classes.paper}>
-                <p>Question - {question.description}</p>
-                <p>Student Name - {question.name}</p>
-                <p>Upvotes - {question.upvotes}</p>
-                <Button onClick={handleClickLikeQuestion}>Like</Button>
-                {question.answers.map(answer => (
-                    <div>
-                        <p>Answer</p>
-                        <p>{answer.description}</p>
-                        <p>Student name - {answer.name}</p>
-                        <p>Upvotes - {answer.upvotes}</p>
-                    </div>
-                ))}
-                <form onSubmit={handleSubmitAnswer} className={classes.form}>
-                    <TextField 
-                        label='Add Answer'
-                        onChange={handleChangeAnswer}
-                        className={classes.form}
-                    />
-                    <Button type='submit'>submit</Button>
-                </form>
-            </Paper>
-        </React.Fragment>
+        <div>
+            {!close && <React.Fragment>
+                <ActionBar 
+                    pageTitle='Question'
+                    actions={[
+                        <div>
+                            <Button onClick={handleClickClose} style = {{ color: 'rgba(70,132,243,1)' }}>Close</Button>
+                        </div>
+                    ]}
+                />
+                <Paper className={classes.paper}>
+                    <p>Question - {question.description}</p>
+                    <p>Student Name - {question.name}</p>
+                    <p>Upvotes - {question.upvotes}</p>
+                    <Button onClick={handleClickLikeQuestion}>Like</Button>
+                    <p>Answers</p>
+                    {question.answers.map(answer => (
+                        <Card className={classes.card}>
+                            <p>{answer.description}</p>
+                            <p>Student name - {answer.name}</p>
+                            <p>Upvotes - {answer.upvotes}</p>
+                            <Button onClick={handleClickLikeAnswer(answer)}>Like</Button>
+                        </Card>
+                    ))}
+                    <form onSubmit={handleSubmitAnswer} className={classes.form}>
+                        <TextField 
+                            label='Add Answer'
+                            onChange={handleChangeAnswer}
+                            className={classes.form}
+                        />
+                        <Button type='submit'>submit</Button>
+                    </form>
+                </Paper>
+            </React.Fragment>}
+            {close && <Dashboard />}
+        </div>
     );
 }

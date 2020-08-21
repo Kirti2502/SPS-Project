@@ -26,7 +26,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
         render={ 
             (props) => (userContext.isAuthenticated
                 ? <AppLayout><Component {...props} /></AppLayout>
-                : <Redirect to="/login" />
+                : <Redirect to="/" />
             )           
         }
     />);

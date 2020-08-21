@@ -35,26 +35,12 @@ const useStyles = makeStyles((theme) => ({
         zIndex: theme.zIndex.drawer + 1,
         backgroundColor: '#FFFFFF'
     },
-    logo: {
-        height: 50,
-        width: 100,
-    },
     content: {
         flexGrow: 1,
         marginTop: '45px',
         marginLeft: '30px',
         fontWeight: 'bold',
         color: '#FFFFFF',
-    },
-    contentNestedList: {
-        marginLeft: '40px',
-        flexGrow: 1,
-        '&:hover': {
-            backgroundColor: '',
-        },
-        '&active': {
-            backgroundColor: '',
-        },
     },
     navBar: {
         listStyle: 'none',
@@ -88,14 +74,12 @@ export default function AppLayout({children}) {
     function handleClickAvatar() {
         setOpen(true);
     }
-    function handleClose() {
-        setOpen(false);
-    }
+    
     return (
         <div className={classes.root}>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
-                    <h3>SPS Doubt Clearing Platform</h3>
+                    <h2>SPS Doubt Clearing Platform</h2>
                     <Avatar onClick={handleClickAvatar}>{appContext.name}</Avatar>
                     <SimpleDialog open={open} />
                 </Toolbar>

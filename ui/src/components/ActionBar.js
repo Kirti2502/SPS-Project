@@ -19,12 +19,11 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
     actionbar:{
         display: 'flex',
-        borderBottom: 'solid',
-        borderColor: '#FFFFFF',
+        borderBottom: '2px solid #000000',
         fontSize: 35,
         justifyContent: 'space-between',
-        padding: theme.spacing(1),
-        marginBottom: '50px'
+        paddingBottom: theme.spacing(3),
+        margin: '30px 20px'
     },
     button: {
         display: 'flex',

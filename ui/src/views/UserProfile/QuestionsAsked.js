@@ -35,7 +35,16 @@ import { UserContext } from '../../components/userContext';
 const useStyles = makeStyles(() => ({
     actionButton: {
         color: 'rgba(70,132,243,1)'
-    }
+    },
+    card: {
+        height: '200px',
+        width: '300px',
+        margin: '50px'
+    },
+    cardsDisplay: {
+        display: 'flex',
+        flexWrap: 'wrap'
+    } 
 }))
 
 export default function QuestionsAsked() {
@@ -123,20 +132,22 @@ export default function QuestionsAsked() {
                     </Button>,
                     ]}
                 />
-                {questions.map(question => (
-                    <Card>
-                        <CardContent>
-                            <Typography>{question.description}</Typography>
-                            <Typography>{question.name}</Typography>
-                            <Typography>{question.upvotes}</Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
-                            <Button onClick={handleClickEdit(question)} size="small">Edit</Button>
-                            <Button onClick={handleClickDelete(question)} size="small">Delete</Button>
-                        </CardActions>
-                    </Card>
-                ))} 
+                <div className={classes.cardsDisplay}>
+                    {questions.map(question => (
+                        <Card className={classes.card}>
+                            <CardContent>
+                                <Typography>Question - {question.description}</Typography>
+                                <Typography>Student name - {question.name}</Typography>
+                                <Typography>Upvotes - {question.upvotes}</Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
+                                <Button onClick={handleClickEdit(question)} size="small">Edit</Button>
+                                <Button onClick={handleClickDelete(question)} size="small">Delete</Button>
+                            </CardActions>
+                        </Card>
+                    ))} 
+                </div>
             </React.Fragment>}
             {openDisplayQuestion && <DisplayQuestion question={questionToBeDisplayed} />}
             {closeEditor && <Dashboard />}
