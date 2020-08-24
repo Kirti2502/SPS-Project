@@ -37,6 +37,7 @@ import configuration from '../../configuration/configuration';
 // styles
 const useStyles = makeStyles(() => ({
     actionButtons: {
+        width: '500px',
         display: 'flex',
         justifyContent: 'space-between'
     },
@@ -116,7 +117,7 @@ export default function Dashboard() {
                     actions={[
                         <div className={classes.actionButtons}>
                             <TextField 
-                                label='Search'
+                                label='e.g java'
                                 onKeyPress={handleChangeSearchField}
                                 type='text' 
                                 startAdornment={
@@ -138,12 +139,12 @@ export default function Dashboard() {
                                 <Typography>Upvotes - {question.upvotes}</Typography>
                             </CardContent>
                             <CardActions>
-                                <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
+                                <Button onClick={handleClickMore(question)} style={{ color: 'rgba(70,132,243,1)' }} size="small">Learn More</Button>
                             </CardActions>
                         </Card>
                     ))} 
                 </div>
-            </React.Fragment>}
+                </React.Fragment>}
             {search && <SearchBox
                             questions={searchedQuestion}
                             handleClickMore={handleClickMore} 

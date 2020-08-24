@@ -24,7 +24,9 @@ const useStyles = makeStyles(() => ({
     },
     card: {
         marginLeft: '50px',
-        marginBottom: '30px'
+        marginBottom: '30px',
+        height: '200px',
+        width: '300px',
     }
 }))
 
@@ -140,27 +142,28 @@ export default function DisplayQuestion({ question }) {
                     ]}
                 />
                 <Paper className={classes.paper}>
-                    <p>Question - {question.description}</p>
+                    <p style={{ backgroundColor: 'rgba(70,132,243,0.5)', padding: '10px' }}>Question - {question.description}</p>
                     <p>Student Name - {question.name}</p>
                     <p>Upvotes - {question.upvotes}</p>
-                    <Button onClick={handleClickLikeQuestion}>Like</Button>
-                    <p>Answers</p>
-                    {question.answers.map(answer => (
-                        <Card className={classes.card}>
-                            <p>{answer.description}</p>
-                            <p>Student name - {answer.name}</p>
-                            <p>Upvotes - {answer.upvotes}</p>
-                            <Button onClick={handleClickLikeAnswer(answer)}>Like</Button>
-                        </Card>
-                    ))}
+                    <Button onClick={handleClickLikeQuestion} style={{ color: 'rgba(70,132,243,1)' }}>Like</Button>
                     <form onSubmit={handleSubmitAnswer} className={classes.form}>
                         <TextField 
                             label='Add Answer'
                             onChange={handleChangeAnswer}
                             className={classes.form}
+                            required
                         />
-                        <Button type='submit'>submit</Button>
+                        <Button type='submit' style={{ color: 'rgba(70,132,243,1)' }}>submit</Button>
                     </form>
+                    <p>Answers</p>
+                    {question.answers.map(answer => (
+                        <Card className={classes.card}>
+                            <p style={{ paddingLeft: '20px' }}>{answer.description}</p>
+                            <p style={{ paddingLeft: '20px' }}>Student name - {answer.name}</p>
+                            <p style={{ paddingLeft: '20px' }}>Upvotes - {answer.upvotes}</p>
+                            <Button onClick={handleClickLikeAnswer(answer)} style={{ paddingLeft: '20px', color: 'rgba(70,132,243,1)' }}>Like</Button>
+                        </Card>
+                    ))}
                 </Paper>
             </React.Fragment>}
             {close && <Dashboard />}

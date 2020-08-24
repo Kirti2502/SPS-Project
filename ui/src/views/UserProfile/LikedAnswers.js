@@ -99,7 +99,7 @@ export default function LikedAnswers() {
                                 <Typography>Upvotes - {question.upvotes}</Typography>
                             </CardContent>
                             <CardActions>
-                                <Button onClick={handleClickMore} size="small">Learn More</Button>
+                                <Button onClick={handleClickMore} style={{ color: 'rgba(70,132,243,1)' }} size="small">Learn More</Button>
                             </CardActions>
                         </Card>
                     ))} 

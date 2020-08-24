@@ -15,6 +15,8 @@ import ActionBar from './ActionBar';
 
 // MUI Icons
 // components
+import DisplayQuestion from '../views/Dashboard/DisplayQuestion';
+
 // services
 // errors
 // utils
@@ -27,29 +29,52 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         justifyContent: 'space-between'
     },
+    card: {
+        height: '200px',
+        width: '300px',
+        margin: '50px'
+    },
+    cardsDisplay: {
+        display: 'flex',
+        flexWrap: 'wrap'
+    }
 }))
 
 export default function SearchBox({ questions, handleClickMore }) {
     
     const classes = useStyles();
+    const [ questionToDisplay, setQuestionToDisplay ] = React.useState({});
+    const [ openDisplayQuestion, setOpenDisplayQuestion ] = React.useState(false);
+
+    function handleClickMore(question) {
+        return() => {
+            setQuestionToDisplay(question);
+            setOpenDisplayQuestion(true);
+        }
+    }
 
     return(
         <div>
+            {!openDisplayQuestion && <React.Fragment>
             <ActionBar 
                 pageTitle='Search'
             />
-            {questions.map(question => (
-                <Card>
-                    <CardContent>
-                        <Typography>{question.description}</Typography>
-                        <Typography>{question.name}</Typography>
-                        <Typography>{question.upvotes}</Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button onClick={handleClickMore} size="small">Learn More</Button>
-                    </CardActions>
-                </Card>
-            ))}
+            <div className={classes.cardsDisplay}>
+                {questions.map(question => (
+                    <Card className={classes.card}>
+                        <CardContent>
+                            <Typography>{question.description}</Typography>
+                            <Typography>{question.name}</Typography>
+                            <Typography>{question.upvotes}</Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
+                        </CardActions>
+                    </Card>
+                ))}
+            </div>
+            </React.Fragment>}
+            {openDisplayQuestion && <DisplayQuestion question={questionToDisplay}/>}   
         </div>
     );
 }
