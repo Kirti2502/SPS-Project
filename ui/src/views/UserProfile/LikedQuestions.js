@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
 export default function LikedQuestions() {
 
     const classes = useStyles();
-    const enqueueSnackbar = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const [ closeEditor, setCloseEditor ] = React.useState(false);
     const [ openDisplayQuestion, setOpenDisplayQuestion ] = React.useState(false);
     const [ questions, setQuestions ] = React.useState([]);
@@ -105,7 +105,7 @@ export default function LikedQuestions() {
                                 <Typography>Upvotes - {question.upvotes}</Typography>
                             </CardContent>
                             <CardActions>
-                                <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
+                                <Button onClick={handleClickMore(question)} style={{ color: 'rgba(70,132,243,1)' }} size="small">Learn More</Button>
                             </CardActions>
                         </Card>
                     ))} 

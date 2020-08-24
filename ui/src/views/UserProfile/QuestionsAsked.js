@@ -141,9 +141,9 @@ export default function QuestionsAsked() {
                                 <Typography>Upvotes - {question.upvotes}</Typography>
                             </CardContent>
                             <CardActions>
-                                <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
-                                <Button onClick={handleClickEdit(question)} size="small">Edit</Button>
-                                <Button onClick={handleClickDelete(question)} size="small">Delete</Button>
+                                <Button onClick={handleClickMore(question)} size="small" style={{ color: 'rgba(70,132,243,1)' }}>Learn More</Button>
+                                <Button onClick={handleClickEdit(question)} size="small" style={{ color: 'rgba(70,132,243,1)' }}>Edit</Button>
+                                <Button onClick={handleClickDelete(question)} size="small" style={{ color: 'rgba(70,132,243,1)' }}>Delete</Button>
                             </CardActions>
                         </Card>
                     ))} 

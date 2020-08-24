@@ -5,7 +5,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 // mui hooks
-import { makeStyles, ServerStyleSheets } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 // mui components
 import Avatar from '@material-ui/core/Avatar';
@@ -17,6 +17,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 // components
 import { UserContext } from '../components/userContext';
 import SimpleDialog from './SimpleDialog';
+import { Button } from '@material-ui/core';
 
 // services
 // errors
@@ -63,6 +64,10 @@ const useStyles = makeStyles((theme) => ({
     dialog: {
         display: 'flex',
         justifyContent: 'flex-end'
+    },
+    heading: {
+        color: '#000000',
+        style: 'none'
     }
 }));
 export default function AppLayout({children}) {
@@ -79,7 +84,11 @@ export default function AppLayout({children}) {
         <div className={classes.root}>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
-                    <h2>SPS Doubt Clearing Platform</h2>
+                    <Link to ='/dashboard'><h2 className={classes.heading}>SPS Doubt Clearing Platform</h2></Link>
+                    <Link to='/questions-liked'><Button>Saved Questions</Button></Link>
+                    <Link to='/answers-liked'><Button>Saved Answers</Button></Link>
+                    <Link to='/questions-asked'><Button>Questions Asked</Button></Link>
+                    <Link to='/questions-answered'><Button>Questions Answered</Button></Link>
                     <Avatar onClick={handleClickAvatar}>{appContext.name}</Avatar>
                     <SimpleDialog open={open} />
                 </Toolbar>

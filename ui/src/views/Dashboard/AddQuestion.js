@@ -153,7 +153,7 @@ export default function QuestionEditor({ questionToBeEdited }) {
                         />
                         <TextField 
                           className={classes.formInput}
-                          label='Tags'
+                          label='e.g. java,javascript'
                           onChange={handleChangeTags}
                           size="small"
                           value={tags}
