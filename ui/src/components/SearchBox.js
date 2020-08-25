@@ -30,8 +30,8 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'space-between'
     },
     card: {
-        height: '200px',
-        width: '300px',
+        height: '280px',
+        width: '480px',
         margin: '50px'
     },
     cardsDisplay: {
@@ -68,7 +68,7 @@ export default function SearchBox({ questions, handleClickMore }) {
                             <Typography>{question.upvotes}</Typography>
                         </CardContent>
                         <CardActions>
-                            <Button onClick={handleClickMore(question)} size="small">Learn More</Button>
+                            <Button onClick={handleClickMore(question)} style={{ color: 'rgba(70,132,243,1)' }}  size="small">Learn More</Button>
                         </CardActions>
                     </Card>
                 ))}

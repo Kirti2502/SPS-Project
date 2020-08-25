@@ -143,6 +143,7 @@ export default function QuestionEditor({ questionToBeEdited }) {
                           onChange={handleChangeName}
                           size='small'
                           value={name}
+                          required
                         />
                         <TextField 
                             className={classes.formInput}
@@ -150,6 +151,7 @@ export default function QuestionEditor({ questionToBeEdited }) {
                             onChange={handleChangeDescription}
                             size='small'
                             value={description}
+                            required
                         />
                         <TextField 
                           className={classes.formInput}
@@ -157,6 +159,7 @@ export default function QuestionEditor({ questionToBeEdited }) {
                           onChange={handleChangeTags}
                           size="small"
                           value={tags}
+                          required
                         />
                         <Button 
                             className={classes.submitButton} 

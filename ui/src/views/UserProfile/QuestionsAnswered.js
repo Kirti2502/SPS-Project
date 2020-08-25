@@ -34,8 +34,8 @@ const useStyles = makeStyles(() => ({
         color: 'rgba(70,132,243,1)'
     },
     card: {
-        height: '200px',
-        width: '300px',
+        height: '280px',
+        width: '480px',
         margin: '50px'
     },
     cardsDisplay: {

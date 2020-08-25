@@ -42,8 +42,8 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'space-between'
     },
     card: {
-        height: '200px',
-        width: '300px',
+        height: '280px',
+        width: '480px',
         margin: '50px'
     },
     cardsDisplay: {
@@ -134,9 +134,9 @@ export default function Dashboard() {
                     {questions.map(question => (
                         <Card className={classes.card}>
                             <CardContent>
-                                <Typography>Question - {question.description}</Typography>
-                                <Typography>Student Name - {question.name}</Typography>
-                                <Typography>Upvotes - {question.upvotes}</Typography>
+                                <Typography style={{ paddingBottom: '10px'}}>Question - {question.description}</Typography>
+                                <Typography style={{ paddingBottom: '10px'}}>Student Name - {question.name}</Typography>
+                                <Typography style={{ paddingBottom: '10px'}}>Upvotes - {question.upvotes}</Typography>
                             </CardContent>
                             <CardActions>
                                 <Button onClick={handleClickMore(question)} style={{ color: 'rgba(70,132,243,1)' }} size="small">Learn More</Button>

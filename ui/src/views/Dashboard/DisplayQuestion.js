@@ -25,8 +25,8 @@ const useStyles = makeStyles(() => ({
     card: {
         marginLeft: '50px',
         marginBottom: '30px',
-        height: '200px',
-        width: '300px',
+        height: '280px',
+        width: '480px',
     }
 }))
 
@@ -62,6 +62,7 @@ export default function DisplayQuestion({ question }) {
             .then(result => {
                 if(!result.error) {
                     enqueueSnackbar('Answer added successfully.');
+                    setAnswer('');
                 } else {
                     enqueueSnackbar('An error occured while adding answer. Please try again.');
                 }
