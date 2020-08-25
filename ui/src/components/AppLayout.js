@@ -65,9 +65,15 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'flex-end'
     },
+    title: {
+        color: 'rgba(70,132,243,1)',
+        textDecoration: 'none',
+        fontSize: '20px'
+    },
     heading: {
         color: '#000000',
-        style: 'none'
+        textDecoration: 'none',
+        fontSize: '12px'
     }
 }));
 export default function AppLayout({children}) {
@@ -84,11 +90,11 @@ export default function AppLayout({children}) {
         <div className={classes.root}>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
-                    <Link to ='/dashboard'><h2 className={classes.heading}>SPS Doubt Clearing Platform</h2></Link>
-                    <Link to='/questions-liked'><Button>Saved Questions</Button></Link>
-                    <Link to='/answers-liked'><Button>Saved Answers</Button></Link>
-                    <Link to='/questions-asked'><Button>Questions Asked</Button></Link>
-                    <Link to='/questions-answered'><Button>Questions Answered</Button></Link>
+                    <Link className={classes.title} to ='/dashboard'><h2>SPS Doubt Clearing Platform</h2></Link>
+                    <Link className={classes.heading} to='/questions-liked'><Button>Liked Questions</Button></Link>
+                    <Link className={classes.heading} to='/answers-liked'><Button>Liked Answers</Button></Link>
+                    <Link className={classes.heading} to='/questions-asked'><Button>Questions Asked</Button></Link>
+                    <Link className={classes.heading} to='/questions-answered'><Button>Questions Answered</Button></Link>
                     <Avatar onClick={handleClickAvatar}>{appContext.name}</Avatar>
                     <SimpleDialog open={open} />
                 </Toolbar>
